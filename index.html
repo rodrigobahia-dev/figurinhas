@@ -1,0 +1,1741 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light}body{margin:0;font:14px system-ui,-apple-system,'Segoe UI',sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Álbum Din Down Down</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+
+<style>
+/* Layout: capa do álbum no topo, índice de capítulos, depois uma "página" de papel por capítulo
+   com grade de figurinhas 3:4. Cores das figurinhas são fixas (impressas); o papel segue o tema. */
+:root {
+  /* Papel e tinta do álbum */
+  --papel: #f3ead6;
+  --papel-2: #e8dbbd;
+  --papel-pagina: #f8f1e1;
+  --tinta: #2a2118;
+  --tinta-suave: #6a5a44;
+  --pontilhado: #b09a74;
+  --destaque: #b8341d;
+  --foco: #1f5fa8;
+  --sombra: rgba(52, 33, 12, .32);
+  --borda-figurinha: #fffaf1;
+  --dialogo: #fbf6ea;
+  --veu: rgba(30, 20, 8, .45);
+
+  /* Tipografia */
+  --fonte-display: "Bowlby One SC", "Arial Black", Impact, sans-serif;
+  --fonte-rotulo: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --fonte-texto: "Barlow", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --papel: #1d1914;
+    --papel-2: #2a241b;
+    --papel-pagina: #24201a;
+    --tinta: #f1e7d2;
+    --tinta-suave: #bba98a;
+    --pontilhado: #6e5f47;
+    --destaque: #f07055;
+    --foco: #93bbff;
+    --sombra: rgba(0, 0, 0, .55);
+    --borda-figurinha: #f6efe0;
+    --dialogo: #2a251d;
+    --veu: rgba(0, 0, 0, .6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --papel: #1d1914;
+  --papel-2: #2a241b;
+  --papel-pagina: #24201a;
+  --tinta: #f1e7d2;
+  --tinta-suave: #bba98a;
+  --pontilhado: #6e5f47;
+  --destaque: #f07055;
+  --foco: #93bbff;
+  --sombra: rgba(0, 0, 0, .55);
+  --borda-figurinha: #f6efe0;
+  --dialogo: #2a251d;
+  --veu: rgba(0, 0, 0, .6);
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--papel);
+  /* Textura leve de papel: pontinhos de retícula */
+  background-image: radial-gradient(color-mix(in srgb, var(--tinta) 6%, transparent) 1px, transparent 1.4px);
+  background-size: 6px 6px;
+  color: var(--tinta);
+  font-family: var(--fonte-texto);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.envoltorio {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+.visualmente-oculto {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 3px;
+}
+
+/* ---------- Capa ---------- */
+.capa {
+  padding-block: 28px 20px;
+}
+.capa-moldura {
+  border: 2px dashed var(--pontilhado);
+  border-radius: 14px;
+  padding: 22px clamp(16px, 4vw, 36px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px 32px;
+  align-items: end;
+  background: color-mix(in srgb, var(--papel-pagina) 70%, transparent);
+}
+.sobretitulo {
+  font-family: var(--fonte-rotulo);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .85rem;
+  color: var(--tinta-suave);
+  margin: 0 0 6px;
+}
+.capa h1 {
+  font-family: var(--fonte-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  line-height: .95;
+  margin: 0;
+  letter-spacing: .01em;
+  text-wrap: balance;
+}
+.capa h1 span { color: var(--destaque); }
+.capa-sub {
+  margin: 10px 0 0;
+  font-size: 1.02rem;
+  color: var(--tinta-suave);
+  max-width: 60ch;
+}
+.capa-sub strong { color: var(--tinta); font-weight: 600; }
+
+.placar {
+  display: grid;
+  gap: 8px;
+  min-width: 220px;
+}
+.placar-numero {
+  font-family: var(--fonte-display);
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.placar-numero small {
+  font-size: .45em;
+  color: var(--tinta-suave);
+}
+.placar-rotulo {
+  font-family: var(--fonte-rotulo);
+  font-weight: 600;
+  font-size: .95rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--tinta-suave);
+}
+.barra {
+  height: 12px;
+  border-radius: 99px;
+  background: var(--papel-2);
+  border: 1px solid var(--pontilhado);
+  overflow: hidden;
+}
+.barra > span {
+  display: block;
+  height: 100%;
+  width: calc(var(--p, 0) * 100%);
+  background: var(--destaque);
+  border-radius: inherit;
+  transition: width .5s ease;
+}
+
+/* ---------- Índice ---------- */
+.indice {
+  padding-block: 4px 8px;
+}
+.indice ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.indice a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border-radius: 99px;
+  border: 1.5px solid var(--pontilhado);
+  color: var(--tinta);
+  text-decoration: none;
+  font-family: var(--fonte-rotulo);
+  font-weight: 600;
+  font-size: .98rem;
+  background: var(--papel-pagina);
+}
+.indice a:hover { border-color: var(--tinta-suave); }
+.indice .mini-escudo {
+  width: 24px; height: 26px;
+  font-size: .72rem;
+}
+.indice .conta {
+  font-variant-numeric: tabular-nums;
+  color: var(--tinta-suave);
+  font-weight: 500;
+}
+
+.status {
+  margin: 10px 0 0;
+  font-size: .92rem;
+  color: var(--tinta-suave);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 1.5em;
+}
+.status::before {
+  content: "";
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--pontilhado);
+  flex: none;
+}
+.status[data-estado="ok"]::before { background: #2f8f5b; }
+.status[data-estado="aviso"]::before { background: #d08a12; }
+
+/* ---------- Páginas (capítulos) ---------- */
+main { padding-block: 12px 8px; display: grid; gap: 28px; }
+
+.pagina {
+  background: var(--papel-pagina);
+  border-radius: 6px;
+  box-shadow: 0 1px 0 var(--pontilhado), 0 10px 24px -14px var(--sombra);
+  padding: clamp(16px, 3vw, 28px);
+  position: relative;
+  scroll-margin-top: 16px;
+}
+.pagina::before {
+  /* moldura pontilhada interna, como a margem impressa do álbum */
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1.5px dotted var(--pontilhado);
+  border-radius: 4px;
+  pointer-events: none;
+}
+.pagina-topo {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px 16px;
+  align-items: center;
+  margin-bottom: 18px;
+  position: relative;
+}
+.escudo {
+  --cor: #555;
+  width: 52px; height: 58px;
+  background: var(--cor);
+  color: var(--tinta-cap, #fff);
+  clip-path: polygon(50% 0, 100% 12%, 100% 58%, 50% 100%, 0 58%, 0 12%);
+  display: grid;
+  place-items: center;
+  font-family: var(--fonte-display);
+  font-size: 1.15rem;
+  line-height: 1;
+  padding-bottom: 6px;
+}
+.pagina-topo h2 {
+  font-family: var(--fonte-display);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+.pagina-topo p {
+  margin: 4px 0 0;
+  font-family: var(--fonte-rotulo);
+  font-weight: 500;
+  font-size: .98rem;
+  color: var(--tinta-suave);
+}
+.pagina-conta {
+  text-align: right;
+  display: grid;
+  gap: 6px;
+  justify-items: end;
+}
+.pagina-conta strong {
+  font-family: var(--fonte-display);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.pagina-conta .barra { width: 120px; height: 8px; }
+.pagina-conta .barra > span { background: var(--cor); }
+
+.grade {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 18px 16px;
+  position: relative;
+}
+
+/* ---------- Slot / figurinha ---------- */
+.slot { min-width: 0; }
+/* Legenda sob o espaço: quem é responsável pela ação */
+.slot-resp {
+  margin: 8px 2px 0;
+  font-family: var(--fonte-rotulo);
+  font-weight: 600;
+  font-size: .95rem;
+  line-height: 1.2;
+  color: var(--tinta);
+  overflow-wrap: anywhere;
+}
+.slot-resp .rot { color: var(--tinta-suave); font-weight: 500; }
+.slot-resp.sem { color: var(--tinta-suave); font-weight: 500; }
+.dlg-bloco {
+  border-top: 1.5px dotted var(--pontilhado);
+  padding-top: 14px;
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+.dlg-bloco label { font-weight: 600; }
+.dlg-bloco input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 44px;
+  font: inherit;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 2px solid var(--pontilhado);
+  background: var(--papel);
+  color: var(--tinta);
+}
+.nota-ok { margin: 0; font-size: .92rem; color: var(--tinta-suave); }
+.slot-btn {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  max-width: 100%;
+  position: relative;
+  border-radius: 10px;
+  text-align: left;
+}
+.slot-btn:focus-visible { outline-offset: 4px; }
+
+/* O espaço impresso no papel (silhueta) */
+.impresso {
+  position: absolute;
+  inset: 0;
+  border: 2px dashed var(--pontilhado);
+  border-radius: 10px;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 10px, color-mix(in srgb, var(--pontilhado) 12%, transparent) 10px 11px),
+    var(--papel-2);
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 6px;
+}
+.impresso-num {
+  font-family: var(--fonte-display);
+  font-size: 2.3rem;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--tinta-suave);
+  font-variant-numeric: tabular-nums;
+}
+.impresso-titulo {
+  font-family: var(--fonte-rotulo);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.15;
+  color: var(--tinta-suave);
+  overflow-wrap: anywhere;
+}
+.impresso-rodape {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--fonte-rotulo);
+  font-weight: 600;
+  font-size: .88rem;
+  color: var(--tinta-suave);
+  font-variant-numeric: tabular-nums;
+}
+.selo-rara {
+  font-family: var(--fonte-rotulo);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: .78rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1.5px solid currentColor;
+  white-space: nowrap;
+}
+
+/* O adesivo colorido */
+.adesivo {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  border: 5px solid var(--borda-figurinha);
+  background:
+    radial-gradient(rgba(255,255,255,.16) 1px, transparent 1.6px) 0 0 / 7px 7px,
+    linear-gradient(160deg, color-mix(in srgb, var(--cor) 82%, #fff) 0%, var(--cor) 55%, color-mix(in srgb, var(--cor) 80%, #000) 100%);
+  color: var(--tinta-fig, #fff);
+  box-shadow:
+    0 1px 0 rgba(0,0,0,.06),
+    0 6px 12px -4px var(--sombra),
+    0 2px 3px rgba(0,0,0,.12);
+  display: flex;
+  flex-direction: column;
+  padding: 9px 10px 10px;
+  gap: 6px;
+  overflow: hidden;
+  visibility: hidden;
+}
+.ad-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 6px;
+}
+.ad-num {
+  font-family: var(--fonte-display);
+  font-size: 1.05rem;
+  line-height: 1;
+  background: var(--borda-figurinha);
+  color: #2a2118;
+  border-radius: 999px;
+  min-width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0 6px;
+  font-variant-numeric: tabular-nums;
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--cor) 60%, #000);
+}
+.ad-cap {
+  font-family: var(--fonte-rotulo);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .72rem;
+  text-align: right;
+  opacity: .92;
+  line-height: 1.15;
+}
+.ad-titulo {
+  font-family: var(--fonte-rotulo);
+  font-weight: 700;
+  font-size: 1.08rem;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+  margin-top: 4px;
+}
+.ad-rodape {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--fonte-rotulo);
+  font-weight: 700;
+  font-size: .86rem;
+  font-variant-numeric: tabular-nums;
+}
+/* Brilho de adesivo (gloss) */
+.adesivo::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.42) 47%, rgba(255,255,255,.08) 55%, transparent 62%);
+  background-size: 260% 100%;
+  background-position: 100% 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+/* Cantinho levemente descolado */
+.adesivo::before {
+  content: "";
+  position: absolute;
+  right: -5px; bottom: -5px;
+  width: 22px; height: 22px;
+  background: linear-gradient(135deg, transparent 50%, color-mix(in srgb, var(--borda-figurinha) 70%, #d8cdb6) 50%);
+  box-shadow: -2px -2px 3px rgba(0,0,0,.12);
+  border-top-left-radius: 4px;
+  z-index: 1;
+}
+
+/* Rara: lâmina holográfica */
+.slot.rara .adesivo {
+  border-color: #e9c96a;
+  box-shadow:
+    0 0 0 1px #b8902c,
+    0 6px 12px -4px var(--sombra),
+    0 2px 3px rgba(0,0,0,.12);
+}
+.slot.rara .adesivo .holo {
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(from 210deg at 70% 30%, #ff9fb2, #ffe48a, #a6ffd0, #8cd9ff, #cfa6ff, #ff9fb2);
+  mix-blend-mode: soft-light;
+  opacity: .75;
+  pointer-events: none;
+}
+.slot.rara .selo-rara-ad {
+  background: #e9c96a;
+  color: #2a2118;
+  border-color: #b8902c;
+}
+
+/* Estados */
+.slot.colada .adesivo { visibility: visible; }
+
+/* Progressiva em andamento: o espaço vai "enchendo" na cor do capítulo, de baixo para cima */
+.slot.parcial .impresso {
+  border-color: var(--cor);
+  background:
+    linear-gradient(to top,
+      color-mix(in srgb, var(--cor) 32%, var(--papel-2)) calc(var(--p, 0) * 100%),
+      transparent calc(var(--p, 0) * 100%)),
+    repeating-linear-gradient(135deg, transparent 0 10px, color-mix(in srgb, var(--pontilhado) 12%, transparent) 10px 11px),
+    var(--papel-2);
+}
+.slot.parcial .impresso-titulo,
+.slot.parcial .impresso-rodape { color: var(--tinta); }
+.slot.parcial .impresso-num { -webkit-text-stroke-color: var(--tinta); }
+
+.chip-progresso {
+  position: absolute;
+  top: -9px;
+  right: -6px;
+  z-index: 2;
+  font-family: var(--fonte-rotulo);
+  font-weight: 700;
+  font-size: .82rem;
+  padding: 1px 8px;
+  border-radius: 99px;
+  background: var(--tinta);
+  color: var(--papel);
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 2px 4px var(--sombra);
+}
+.slot.colada .chip-progresso { display: none; }
+
+.slot-btn:hover .impresso { border-color: var(--tinta-suave); }
+@media (prefers-reduced-motion: no-preference) {
+  .slot.colada .slot-btn:hover .adesivo::after,
+  .slot.colada .slot-btn:focus-visible .adesivo::after {
+    animation: brilho 1.1s ease;
+  }
+  .slot.colando .adesivo {
+    animation: colar .85s cubic-bezier(.2, .9, .25, 1.15);
+  }
+  .slot.colando .adesivo::after {
+    animation: brilho 1.1s .45s ease both;
+  }
+  .slot.avancou .impresso {
+    animation: avancar .5s ease;
+  }
+  .slot.rara.colada .holo {
+    animation: holo 6s linear infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slot.colando .adesivo { animation: aparecer .3s ease; }
+}
+@keyframes colar {
+  0%   { transform: translate(-10px, -26px) rotate(-8deg) scale(1.14); opacity: 0; box-shadow: 0 30px 30px -10px var(--sombra); }
+  30%  { opacity: 1; }
+  68%  { transform: translate(0, 3px) rotate(1.2deg) scale(.97); }
+  84%  { transform: translate(0, -1px) rotate(-.4deg) scale(1.01); }
+  100% { transform: none; }
+}
+@keyframes brilho {
+  from { background-position: 100% 0; }
+  to   { background-position: -60% 0; }
+}
+@keyframes avancar {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+@keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+@keyframes holo { to { filter: hue-rotate(360deg); } }
+
+/* ---------- Rodapé ---------- */
+.rodape {
+  padding-block: 28px 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px 40px;
+  color: var(--tinta-suave);
+  font-size: .95rem;
+}
+.rodape h2 {
+  font-family: var(--fonte-rotulo);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .9rem;
+  color: var(--tinta);
+  margin: 0 0 10px;
+}
+.legenda {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.legenda li { display: flex; align-items: center; gap: 10px; }
+.amostra {
+  width: 22px; height: 28px;
+  border-radius: 4px;
+  flex: none;
+}
+.amostra.vazia { border: 1.5px dashed var(--pontilhado); background: var(--papel-2); }
+.amostra.parcial { background: linear-gradient(to top, color-mix(in srgb, #1f5fa8 32%, var(--papel-2)) 45%, var(--papel-2) 45%); border: 1.5px dashed #1f5fa8; }
+.amostra.colada { background: #1f5fa8; border: 3px solid var(--borda-figurinha); box-shadow: 0 2px 4px var(--sombra); }
+.amostra.rara { background: conic-gradient(#ff9fb2, #ffe48a, #a6ffd0, #8cd9ff, #cfa6ff, #ff9fb2); border: 3px solid #e9c96a; }
+.rodape p { margin: 0 0 8px; max-width: 60ch; }
+
+.botao {
+  appearance: none;
+  font: inherit;
+  font-family: var(--fonte-rotulo);
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: .02em;
+  border-radius: 8px;
+  padding: 9px 16px;
+  border: 2px solid var(--tinta);
+  background: var(--tinta);
+  color: var(--papel);
+  cursor: pointer;
+  min-height: 44px;
+}
+.botao:hover { filter: brightness(1.08); }
+.botao.secundario { background: transparent; color: var(--tinta); }
+.botao.perigo { background: var(--destaque); border-color: var(--destaque); color: #fff; }
+.botao[disabled] { opacity: .5; cursor: not-allowed; }
+.zerar { margin-top: 6px; display: grid; gap: 10px; justify-items: start; }
+.zerar-confirma {
+  border: 1.5px dashed var(--destaque);
+  border-radius: 8px;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+.zerar-confirma p { margin: 0; color: var(--tinta); }
+.linha-botoes { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Diálogo de detalhe ---------- */
+dialog {
+  border: 0;
+  padding: 0;
+  border-radius: 14px;
+  background: var(--dialogo);
+  color: var(--tinta);
+  width: min(460px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  box-shadow: 0 24px 48px -12px var(--sombra);
+}
+dialog::backdrop { background: var(--veu); }
+.dlg-corpo { padding: 22px 22px 20px; display: grid; gap: 14px; }
+.dlg-cabeca {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+.dlg-num {
+  width: 52px; height: 64px;
+  border-radius: 8px;
+  border: 4px solid var(--borda-figurinha);
+  background: var(--cor);
+  color: var(--tinta-fig, #fff);
+  display: grid;
+  place-items: center;
+  font-family: var(--fonte-display);
+  font-size: 1.2rem;
+  box-shadow: 0 3px 8px -2px var(--sombra);
+}
+.dlg-cap {
+  font-family: var(--fonte-rotulo);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .82rem;
+  color: var(--tinta-suave);
+  margin: 0;
+}
+dialog h2 {
+  font-family: var(--fonte-rotulo);
+  font-weight: 700;
+  font-size: 1.45rem;
+  line-height: 1.1;
+  margin: 2px 0 0;
+  text-wrap: balance;
+}
+.dlg-desc { margin: 0; }
+.dlg-dados {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 14px;
+  font-size: .95rem;
+}
+.dlg-dados dt { color: var(--tinta-suave); }
+.dlg-dados dd { margin: 0; }
+.dlg-controles {
+  border-top: 1.5px dotted var(--pontilhado);
+  padding-top: 14px;
+  display: grid;
+  gap: 12px;
+}
+.contador {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.contador label { width: 100%; font-weight: 600; }
+.contador input {
+  width: 6.5ch;
+  min-height: 44px;
+  font: inherit;
+  font-family: var(--fonte-rotulo);
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 8px;
+  border: 2px solid var(--pontilhado);
+  background: var(--papel);
+  color: var(--tinta);
+  font-variant-numeric: tabular-nums;
+}
+.contador .passo {
+  width: 44px; height: 44px;
+  border-radius: 8px;
+  border: 2px solid var(--tinta);
+  background: transparent;
+  color: var(--tinta);
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.contador .de { color: var(--tinta-suave); font-family: var(--fonte-rotulo); font-weight: 600; font-size: 1.05rem; }
+.aviso-leitura { margin: 0; font-size: .92rem; color: var(--tinta-suave); }
+.erro { margin: 0; font-size: .92rem; color: var(--destaque); }
+.dlg-pe {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+  .capa-moldura { grid-template-columns: minmax(0, 1fr); }
+  .placar { min-width: 0; }
+  .pagina-topo { grid-template-columns: auto minmax(0, 1fr); }
+  .pagina-conta { grid-column: 1 / -1; justify-items: start; text-align: left; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; }
+  .pagina-conta .barra { width: 100%; }
+  .grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; }
+  .impresso-num { font-size: 1.9rem; }
+  .ad-titulo { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!--
+  CONFIGURAÇÃO DO ÁLBUM — o único bloco a editar para mudar figurinhas.
+  - "secoes": capítulos do álbum, na ordem em que aparecem.
+  - "figurinhas": cada uma pertence a uma seção ("secao") e tem um "id" fixo.
+    O progresso salvo fica ligado ao "id": mudar títulos não apaga nada,
+    mas mudar o "id" faz a figurinha começar vazia.
+  - "meta": quantas unidades completam a figurinha (1 = figurinha simples).
+    Com meta maior que 1 ela vira progressiva (ex.: 0/11 meses).
+  - "rara": true para marcos de destaque (lâmina holográfica).
+  Fonte do Ano 1: matriz do formulário ICMS-RJ (mar/2023) e cronograma do Ano 1.
+-->
+<script type="application/json" id="config-album">
+{
+  "album": {
+    "titulo": "Din Down Down",
+    "edicao": "Ano 1",
+    "projeto": "Construindo laços com a família",
+    "periodo": "Lei de Incentivo ICMS-RJ · Ano 1 de 2 (projeto de nov/2021 a out/2023)",
+    "nota": "Modelo de teste para o Ano 4"
+  },
+  "secoes": [
+    { "id": "pre-producao", "titulo": "Pré-produção", "sigla": "PP", "etapas": "Etapas 1 a 3 da matriz", "cor": "#1f6f4a", "tinta": "#ffffff" },
+    { "id": "oficinas", "titulo": "Oficinas", "sigla": "OF", "etapas": "Etapa 4 da matriz", "cor": "#c03a22", "tinta": "#ffffff" },
+    { "id": "formacao", "titulo": "Formação e SROI", "sigla": "FS", "etapas": "Etapas 5, 6 e 9 da matriz", "cor": "#1f5fa8", "tinta": "#ffffff" },
+    { "id": "rodas", "titulo": "Rodas e apresentações", "sigla": "RA", "etapas": "Etapas 7 e 8 da matriz", "cor": "#e2a52a", "tinta": "#2a1d0c" },
+    { "id": "comunicacao", "titulo": "Comunicação", "sigla": "CO", "etapas": "Plano de comunicação", "cor": "#6b3fa0", "tinta": "#ffffff" },
+    { "id": "prestacao", "titulo": "Prestação de contas", "sigla": "PC", "etapas": "Etapa 10 da matriz", "cor": "#0f6c73", "tinta": "#ffffff" }
+  ],
+  "figurinhas": [
+    { "id": "pp-01", "secao": "pre-producao", "titulo": "Equipe contratada", "descricao": "Seleção dos profissionais e contratos assinados, com as normas de conduta e atribuições de cada função.", "etapa": 1, "meta": 1 },
+    { "id": "pp-02", "secao": "pre-producao", "titulo": "Assessorias jurídica e contábil", "descricao": "Assessorias previstas no orçamento contratadas para acompanhar contratos e execução.", "etapa": 1, "meta": 1 },
+    { "id": "pp-03", "secao": "pre-producao", "titulo": "Mapeamento com as secretarias de educação", "descricao": "Mapeamento das escolas que se encaixam no perfil do projeto, junto às secretarias de Niterói, São Gonçalo e Maricá.", "etapa": 2, "meta": 3, "unidade": "cidades" },
+    { "id": "pp-04", "secao": "pre-producao", "titulo": "Treinamento intensivo da equipe", "descricao": "Treinamento da equipe técnica, com metas definidas para cada profissional e colaborador.", "etapa": 2, "meta": 1 },
+    { "id": "pp-05", "secao": "pre-producao", "titulo": "Estudantes matriculados", "descricao": "Chegada às escolas, divulgação e matrículas. Estimativa da matriz: 30 estudantes por escola em 12 escolas.", "etapa": 3, "meta": 360, "unidade": "estudantes" },
+    { "id": "pp-06", "secao": "pre-producao", "titulo": "Uniformes e kits entregues", "descricao": "Uniformes e acessórios (bolsas, garrafas, pastas) preparados a partir do mapeamento dos públicos.", "etapa": 3, "meta": 1 },
+
+    { "id": "of-01", "secao": "oficinas", "titulo": "Capoeira acessível na APAE/Niterói", "descricao": "Oficina regular com os capoeiristas com deficiência: 1 encontro semanal de 1h30.", "etapa": 4, "meta": 11, "unidade": "meses" },
+    { "id": "of-02", "secao": "oficinas", "titulo": "Música das mães-griô na APAE", "descricao": "Oficina de percussão e canto com as mães e responsáveis: 1 encontro semanal de 1h30.", "etapa": 4, "meta": 11, "unidade": "meses" },
+    { "id": "of-03", "secao": "oficinas", "titulo": "Oficinas nas escolas de Niterói", "descricao": "Capoeira acessível e música em 4 escolas: 1 de Educação Infantil, 2 do Fundamental I e 1 do Fundamental II.", "etapa": 4, "meta": 4, "unidade": "escolas" },
+    { "id": "of-04", "secao": "oficinas", "titulo": "Oficinas nas escolas de São Gonçalo", "descricao": "Capoeira acessível e música em 4 escolas: 1 de Educação Infantil, 2 do Fundamental I e 1 do Fundamental II.", "etapa": 4, "meta": 4, "unidade": "escolas" },
+    { "id": "of-05", "secao": "oficinas", "titulo": "Oficinas nas escolas de Maricá", "descricao": "Capoeira acessível e música em 4 escolas: 1 de Educação Infantil, 2 do Fundamental I e 1 do Fundamental II.", "etapa": 4, "meta": 4, "unidade": "escolas" },
+    { "id": "of-06", "secao": "oficinas", "titulo": "Monitoras e monitores com deficiência e mães-griô contratados", "descricao": "A inovação central do projeto: estudantes da APAE e suas mães passam a atuar como facilitadores, com contratação prevista no orçamento.", "etapa": 4, "meta": 1, "rara": true },
+
+    { "id": "fs-01", "secao": "formacao", "titulo": "Rodas de formação técnica", "descricao": "Encontros quinzenais sobre acessibilidade cultural, cultura afro-brasileira, educação ambiental e participação cidadã.", "etapa": 5, "meta": 11, "unidade": "rodas" },
+    { "id": "fs-02", "secao": "formacao", "titulo": "Rodas de conversa de avaliação", "descricao": "Rodas de avaliação do projeto e estudo do método SROI.", "etapa": 6, "meta": 11, "unidade": "rodas" },
+    { "id": "fs-03", "secao": "formacao", "titulo": "Formação em SROI", "descricao": "Formação da equipe nos 3 primeiros meses, seguida de grupo de estudos.", "etapa": 9, "meta": 1 },
+    { "id": "fs-04", "secao": "formacao", "titulo": "Relatório SROI entregue", "descricao": "Relatório \"Din Down Down – SROI\", com consultoria nos 3 últimos meses.", "etapa": 9, "meta": 1, "rara": true },
+
+    { "id": "ra-01", "secao": "rodas", "titulo": "Rodas de integração", "descricao": "Rodas de capoeira com estudantes, mães, comunidade escolar e territorial. A matriz prevê 432 no projeto todo; aqui, a metade do Ano 1.", "etapa": 7, "meta": 216, "unidade": "rodas" },
+    { "id": "ra-02", "secao": "rodas", "titulo": "Apresentações externas", "descricao": "Apresentações reunindo as rodas das escolas e a roda do Din Down Down, fora do território das escolas.", "etapa": 8, "meta": 2, "unidade": "apresentações" },
+    { "id": "ra-03", "secao": "rodas", "titulo": "Libras e audiodescrição ao vivo", "descricao": "Intérprete de Libras e audiodescrição ao vivo garantidos nas apresentações artísticas.", "etapa": 8, "meta": 1, "rara": true },
+    { "id": "ra-04", "secao": "rodas", "titulo": "Visita ao Parque da Serra da Tiririca", "descricao": "Visita guiada e apresentação na unidade de conservação que abrange Niterói e Maricá.", "etapa": 8, "meta": 1, "rara": true },
+
+    { "id": "co-01", "secao": "comunicacao", "titulo": "Canais nas redes sociais", "descricao": "Página, perfil e canal no Facebook, Instagram e YouTube organizados e ativos.", "etapa": 0, "meta": 3, "unidade": "canais" },
+    { "id": "co-02", "secao": "comunicacao", "titulo": "Assessoria de imprensa ativa", "descricao": "Releases distribuídos para imprensa local, estadual e nacional.", "etapa": 0, "meta": 1 },
+    { "id": "co-03", "secao": "comunicacao", "titulo": "Banners e backdrop", "descricao": "Banner na porta das escolas para as matrículas, banner nos locais das aulas e backdrop nas apresentações externas.", "etapa": 0, "meta": 1 },
+
+    { "id": "pc-01", "secao": "prestacao", "titulo": "Registros reunidos", "descricao": "Fotos, vídeos, depoimentos, listas de presença, materiais e clipping organizados para a prestação de contas.", "etapa": 10, "meta": 1 },
+    { "id": "pc-02", "secao": "prestacao", "titulo": "Prestação de contas entregue", "descricao": "Prestação de contas financeira, fiscal e física, com extratos, notas fiscais e comprovantes.", "etapa": 10, "meta": 1, "rara": true }
+  ]
+}
+</script>
+
+<header class="capa">
+  <div class="envoltorio">
+    <div class="capa-moldura">
+      <div>
+        <p class="sobretitulo" id="capa-sobre">Instituto Gingas · Álbum oficial do projeto</p>
+        <h1>Álbum <span id="capa-titulo">Din Down Down</span></h1>
+        <p class="capa-sub" id="capa-sub"></p>
+      </div>
+      <div class="placar" aria-labelledby="placar-rotulo">
+        <span class="placar-rotulo" id="placar-rotulo">Figurinhas coladas</span>
+        <span class="placar-numero"><span id="total-coladas">0</span><small> / <span id="total-figurinhas">0</span></small></span>
+        <div class="barra" role="progressbar" id="barra-geral" aria-label="Progresso geral do álbum" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+        <span class="placar-rotulo" id="total-pct">0% do álbum completo</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="indice" aria-label="Capítulos do álbum">
+  <div class="envoltorio">
+    <ol id="indice"></ol>
+    <p class="status" id="status" role="status">Abrindo o álbum compartilhado…</p>
+  </div>
+</nav>
+
+<main class="envoltorio" id="paginas"></main>
+
+<footer class="envoltorio rodape">
+  <section aria-labelledby="leg-titulo">
+    <h2 id="leg-titulo">Legenda</h2>
+    <ul class="legenda">
+      <li><span class="amostra vazia" aria-hidden="true"></span>Espaço vazio: ainda por fazer</li>
+      <li><span class="amostra parcial" aria-hidden="true"></span>Figurinha progressiva em andamento (ex.: 4/11)</li>
+      <li><span class="amostra colada" aria-hidden="true"></span>Figurinha colada: concluída</li>
+      <li><span class="amostra rara" aria-hidden="true"></span>Rara: marco de destaque do projeto</li>
+    </ul>
+  </section>
+  <section aria-labelledby="uso-titulo">
+    <h2 id="uso-titulo">Como usar</h2>
+    <p>Toque numa figurinha para ver os detalhes. Quando a tarefa estiver feita, cole a figurinha. Nas progressivas, informe quantas unidades já foram feitas.</p>
+    <p>No mesmo quadro dá para definir quem é responsável por cada ação. O nome aparece embaixo da figurinha.</p>
+    <p id="uso-onde">O progresso é compartilhado: toda a equipe vê o mesmo álbum.</p>
+    <div class="zerar" id="zerar" hidden>
+      <button class="botao secundario" type="button" id="btn-zerar">Zerar álbum</button>
+      <div class="zerar-confirma" id="zerar-confirma" hidden>
+        <p id="zerar-aviso">Isso descola todas as figurinhas para toda a equipe. Não dá para desfazer.</p>
+        <div class="linha-botoes">
+          <button class="botao perigo" type="button" id="btn-zerar-sim">Sim, zerar o álbum</button>
+          <button class="botao secundario" type="button" id="btn-zerar-nao">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</footer>
+
+<dialog id="detalhe" aria-labelledby="dlg-titulo">
+  <div class="dlg-corpo" id="dlg-corpo"></div>
+</dialog>
+
+<p class="visualmente-oculto" aria-live="polite" id="anuncio"></p>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------- Configuração ----------
+  var CONFIG = JSON.parse(document.getElementById("config-album").textContent);
+  var secoesPorId = {};
+  CONFIG.secoes.forEach(function (s) { secoesPorId[s.id] = s; });
+
+  // Numeração global das figurinhas, na ordem do arquivo de configuração
+  var figurinhas = CONFIG.figurinhas.map(function (f, i) {
+    return Object.assign({ meta: 1, unidade: "", rara: false }, f, { numero: i + 1 });
+  });
+  var figPorId = {};
+  figurinhas.forEach(function (f) { figPorId[f.id] = f; });
+
+  // ---------- Estado ----------
+  var estado = {
+    progresso: {},        // id -> { atual, por, em }
+    carregou: false,      // já recebeu o primeiro retrato do banco
+    db: null,
+    user: null,
+    meuId: null,
+    podeEscrever: false,  // pode colar/descolar
+    souAdmin: false,      // pode zerar o álbum
+    responsaveis: {},     // id -> { nome, por, em }: quem responde por cada ação
+    gravandoResp: {},     // id -> true enquanto o responsável está sendo salvo
+    nota: "",             // aviso curto mostrado no diálogo (ex.: "Responsável salvo.")
+    gravando: {},         // id -> true enquanto uma gravação está em curso
+    abertoId: null        // figurinha aberta no diálogo
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var doisDigitos = function (n) { return n < 10 ? "0" + n : String(n); };
+
+  // ---------- Cálculos ----------
+  function atualDe(f) {
+    var p = estado.progresso[f.id];
+    var v = p && typeof p.atual === "number" && isFinite(p.atual) ? p.atual : 0;
+    return Math.max(0, Math.min(f.meta, Math.round(v)));
+  }
+  function responsavelDe(f) {
+    var r = estado.responsaveis[f.id];
+    return r && typeof r.nome === "string" ? r.nome : "";
+  }
+  function estaColada(f) { return atualDe(f) >= f.meta; }
+  function fracao(f) { return f.meta > 0 ? atualDe(f) / f.meta : 0; }
+  function textoMeta(f) {
+    return atualDe(f) + "/" + f.meta + (f.unidade ? " " + f.unidade : "");
+  }
+  function descreverEstado(f) {
+    if (estaColada(f)) return "colada";
+    if (f.meta > 1 && atualDe(f) > 0) return "em andamento, " + atualDe(f) + " de " + f.meta + (f.unidade ? " " + f.unidade : "");
+    if (f.meta > 1) return "vazia, 0 de " + f.meta + (f.unidade ? " " + f.unidade : "");
+    return "vazia";
+  }
+
+  // ---------- Montagem da página ----------
+  function montarCapa() {
+    var a = CONFIG.album;
+    $("capa-titulo").textContent = a.titulo;
+    var sub = $("capa-sub");
+    sub.textContent = "";
+    var forte = document.createElement("strong");
+    forte.textContent = a.edicao + " · " + a.projeto;
+    sub.appendChild(forte);
+    sub.appendChild(document.createTextNode(". " + a.periodo + ". " + a.nota + "."));
+    $("total-figurinhas").textContent = figurinhas.length;
+  }
+
+  function criarEscudo(secao, classeExtra) {
+    var e = document.createElement("span");
+    e.className = "escudo" + (classeExtra ? " " + classeExtra : "");
+    e.style.setProperty("--cor", secao.cor);
+    e.style.setProperty("--tinta-cap", secao.tinta);
+    e.setAttribute("aria-hidden", "true");
+    e.textContent = secao.sigla;
+    return e;
+  }
+
+  function montarIndice() {
+    var ol = $("indice");
+    CONFIG.secoes.forEach(function (s) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + s.id;
+      a.appendChild(criarEscudo(s, "mini-escudo"));
+      var nome = document.createElement("span");
+      nome.textContent = s.titulo;
+      var conta = document.createElement("span");
+      conta.className = "conta";
+      conta.id = "indice-conta-" + s.id;
+      a.appendChild(nome);
+      a.appendChild(conta);
+      li.appendChild(a);
+      ol.appendChild(li);
+    });
+  }
+
+  function montarPaginas() {
+    var main = $("paginas");
+    CONFIG.secoes.forEach(function (s, i) {
+      var sec = document.createElement("section");
+      sec.className = "pagina";
+      sec.id = s.id;
+      sec.style.setProperty("--cor", s.cor);
+      sec.setAttribute("aria-labelledby", "titulo-" + s.id);
+
+      var topo = document.createElement("div");
+      topo.className = "pagina-topo";
+      topo.appendChild(criarEscudo(s));
+      var textos = document.createElement("div");
+      var h2 = document.createElement("h2");
+      h2.id = "titulo-" + s.id;
+      h2.textContent = "Cap. " + (i + 1) + " · " + s.titulo;
+      var p = document.createElement("p");
+      p.textContent = s.etapas;
+      textos.appendChild(h2);
+      textos.appendChild(p);
+      topo.appendChild(textos);
+
+      var conta = document.createElement("div");
+      conta.className = "pagina-conta";
+      var forte = document.createElement("strong");
+      forte.id = "conta-" + s.id;
+      var barra = document.createElement("div");
+      barra.className = "barra";
+      barra.id = "barra-" + s.id;
+      barra.setAttribute("role", "progressbar");
+      barra.setAttribute("aria-label", "Progresso do capítulo " + s.titulo);
+      barra.setAttribute("aria-valuemin", "0");
+      barra.setAttribute("aria-valuemax", "100");
+      barra.appendChild(document.createElement("span"));
+      conta.appendChild(forte);
+      conta.appendChild(barra);
+      topo.appendChild(conta);
+      sec.appendChild(topo);
+
+      var ol = document.createElement("ol");
+      ol.className = "grade";
+      figurinhas.filter(function (f) { return f.secao === s.id; }).forEach(function (f) {
+        ol.appendChild(montarSlot(f, s));
+      });
+      sec.appendChild(ol);
+      main.appendChild(sec);
+    });
+  }
+
+  function montarSlot(f, s) {
+    var li = document.createElement("li");
+    li.className = "slot" + (f.rara ? " rara" : "");
+    li.id = "slot-" + f.id;
+    li.style.setProperty("--cor", s.cor);
+    li.style.setProperty("--tinta-fig", s.tinta);
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "slot-btn";
+    btn.setAttribute("aria-haspopup", "dialog");
+    btn.addEventListener("click", function () { abrirDetalhe(f.id, btn); });
+
+    // Espaço impresso (silhueta)
+    var imp = document.createElement("span");
+    imp.className = "impresso";
+    imp.setAttribute("aria-hidden", "true");
+    var num = document.createElement("span");
+    num.className = "impresso-num";
+    num.textContent = doisDigitos(f.numero);
+    var tit = document.createElement("span");
+    tit.className = "impresso-titulo";
+    tit.textContent = f.titulo;
+    var rod = document.createElement("span");
+    rod.className = "impresso-rodape";
+    var metaImp = document.createElement("span");
+    metaImp.className = "impresso-meta";
+    rod.appendChild(metaImp);
+    if (f.rara) {
+      var r = document.createElement("span");
+      r.className = "selo-rara";
+      r.textContent = "★ Rara";
+      rod.appendChild(r);
+    }
+    imp.appendChild(num);
+    imp.appendChild(tit);
+    imp.appendChild(rod);
+
+    // Adesivo colorido
+    var ad = document.createElement("span");
+    ad.className = "adesivo";
+    ad.setAttribute("aria-hidden", "true");
+    if (f.rara) {
+      var holo = document.createElement("span");
+      holo.className = "holo";
+      ad.appendChild(holo);
+    }
+    var adTopo = document.createElement("span");
+    adTopo.className = "ad-topo";
+    var adNum = document.createElement("span");
+    adNum.className = "ad-num";
+    adNum.textContent = doisDigitos(f.numero);
+    var adCap = document.createElement("span");
+    adCap.className = "ad-cap";
+    adCap.textContent = s.titulo;
+    adTopo.appendChild(adNum);
+    adTopo.appendChild(adCap);
+    var adTit = document.createElement("span");
+    adTit.className = "ad-titulo";
+    adTit.textContent = f.titulo;
+    var adRod = document.createElement("span");
+    adRod.className = "ad-rodape";
+    var adMeta = document.createElement("span");
+    adMeta.className = "ad-meta";
+    adRod.appendChild(adMeta);
+    if (f.rara) {
+      var r2 = document.createElement("span");
+      r2.className = "selo-rara selo-rara-ad";
+      r2.textContent = "★ Rara";
+      adRod.appendChild(r2);
+    }
+    ad.appendChild(adTopo);
+    ad.appendChild(adTit);
+    ad.appendChild(adRod);
+
+    btn.appendChild(imp);
+    btn.appendChild(ad);
+
+    if (f.meta > 1) {
+      var chip = document.createElement("span");
+      chip.className = "chip-progresso";
+      chip.setAttribute("aria-hidden", "true");
+      btn.appendChild(chip);
+    }
+
+    li.appendChild(btn);
+
+    // Legenda com o responsável (o nome também entra no rótulo do botão)
+    var resp = document.createElement("p");
+    resp.className = "slot-resp";
+    resp.setAttribute("aria-hidden", "true");
+    li.appendChild(resp);
+    return li;
+  }
+
+  // ---------- Atualização visual ----------
+  function atualizarSlot(f, animacao) {
+    var li = $("slot-" + f.id);
+    if (!li) return;
+    var colada = estaColada(f);
+    var parcial = !colada && f.meta > 1 && atualDe(f) > 0;
+    li.classList.toggle("colada", colada);
+    li.classList.toggle("parcial", parcial);
+    li.style.setProperty("--p", String(fracao(f)));
+
+    var metaTxt = f.meta > 1 ? textoMeta(f) : (colada ? "Colada" : "");
+    li.querySelector(".impresso-meta").textContent = metaTxt;
+    li.querySelector(".ad-meta").textContent = f.meta > 1 ? textoMeta(f) : "Concluída";
+    var chip = li.querySelector(".chip-progresso");
+    if (chip) chip.textContent = atualDe(f) + "/" + f.meta;
+
+    var nomeResp = responsavelDe(f);
+    var legenda = li.querySelector(".slot-resp");
+    legenda.textContent = "";
+    legenda.classList.toggle("sem", !nomeResp);
+    if (nomeResp) {
+      var rot = document.createElement("span");
+      rot.className = "rot";
+      rot.textContent = "Resp.: ";
+      legenda.appendChild(rot);
+      legenda.appendChild(document.createTextNode(nomeResp));
+    } else {
+      legenda.textContent = "Sem responsável";
+    }
+
+    var rotulo = "Figurinha " + f.numero + ", " + f.titulo + ": " + descreverEstado(f) + "." + (f.rara ? " Rara." : "") +
+      (nomeResp ? " Responsável: " + nomeResp + "." : " Sem responsável definido.");
+    li.querySelector(".slot-btn").setAttribute("aria-label", rotulo);
+
+    if (animacao) {
+      var classe = animacao === "colar" ? "colando" : "avancou";
+      li.classList.remove("colando", "avancou");
+      void li.offsetWidth; // reinicia a animação
+      li.classList.add(classe);
+      setTimeout(function () { li.classList.remove(classe); }, 1700);
+    }
+  }
+
+  function atualizarTotais() {
+    var coladas = 0, soma = 0;
+    figurinhas.forEach(function (f) {
+      if (estaColada(f)) coladas++;
+      soma += fracao(f);
+    });
+    var pct = figurinhas.length ? Math.round((soma / figurinhas.length) * 100) : 0;
+    $("total-coladas").textContent = coladas;
+    $("total-pct").textContent = pct + "% do álbum completo";
+    var bg = $("barra-geral");
+    bg.style.setProperty("--p", String(pct / 100));
+    bg.setAttribute("aria-valuenow", String(pct));
+    bg.setAttribute("aria-valuetext", coladas + " de " + figurinhas.length + " figurinhas coladas, " + pct + "% do álbum");
+
+    CONFIG.secoes.forEach(function (s) {
+      var lista = figurinhas.filter(function (f) { return f.secao === s.id; });
+      var c = lista.filter(estaColada).length;
+      var somaS = lista.reduce(function (acc, f) { return acc + fracao(f); }, 0);
+      var pctS = lista.length ? Math.round((somaS / lista.length) * 100) : 0;
+      $("conta-" + s.id).textContent = c + "/" + lista.length;
+      $("indice-conta-" + s.id).textContent = c + "/" + lista.length;
+      var b = $("barra-" + s.id);
+      b.style.setProperty("--p", String(pctS / 100));
+      b.setAttribute("aria-valuenow", String(pctS));
+      b.setAttribute("aria-valuetext", c + " de " + lista.length + " figurinhas coladas, " + pctS + "%");
+    });
+  }
+
+  function renderizarTudo() {
+    figurinhas.forEach(function (f) { atualizarSlot(f, null); });
+    atualizarTotais();
+  }
+
+  function definirStatus(texto, tipo) {
+    var st = $("status");
+    st.textContent = texto;
+    st.setAttribute("data-estado", tipo || "");
+  }
+
+  function anunciar(texto) {
+    var el = $("anuncio");
+    el.textContent = "";
+    setTimeout(function () { el.textContent = texto; }, 60);
+  }
+
+  // ---------- Diálogo de detalhe ----------
+  var dialogo = $("detalhe");
+  var gatilho = null;
+
+  function abrirDetalhe(id, btn) {
+    gatilho = btn;
+    estado.abertoId = id;
+    estado.nota = "";
+    preencherDetalhe(id, null);
+    if (typeof dialogo.showModal === "function") {
+      dialogo.showModal();
+    } else {
+      dialogo.setAttribute("open", "");
+    }
+  }
+  function fecharDetalhe() {
+    if (dialogo.open) dialogo.close();
+  }
+  dialogo.addEventListener("close", function () {
+    estado.abertoId = null;
+    if (gatilho) gatilho.focus();
+  });
+  dialogo.addEventListener("click", function (ev) {
+    if (ev.target === dialogo) fecharDetalhe(); // clique no fundo fecha
+  });
+
+  function el(tag, classe, texto) {
+    var e = document.createElement(tag);
+    if (classe) e.className = classe;
+    if (texto != null) e.textContent = texto;
+    return e;
+  }
+
+  function preencherDetalhe(id, mensagemErro) {
+    var f = figPorId[id];
+    var s = secoesPorId[f.secao];
+    var corpo = $("dlg-corpo");
+    // Guarda onde estava o foco para devolvê-lo depois de redesenhar
+    var ativo = document.activeElement;
+    var focoId = ativo && dialogo.contains(ativo) && ativo.id ? ativo.id : null;
+    corpo.textContent = "";
+    corpo.style.setProperty("--cor", s.cor);
+    corpo.style.setProperty("--tinta-fig", s.tinta);
+
+    var cab = el("div", "dlg-cabeca");
+    var n = el("span", "dlg-num", doisDigitos(f.numero));
+    n.setAttribute("aria-hidden", "true");
+    var tx = el("div");
+    tx.appendChild(el("p", "dlg-cap", "Figurinha " + f.numero + " · " + s.titulo + (f.rara ? " · ★ Rara" : "")));
+    var h = el("h2", null, f.titulo);
+    h.id = "dlg-titulo";
+    tx.appendChild(h);
+    cab.appendChild(n);
+    cab.appendChild(tx);
+    corpo.appendChild(cab);
+
+    corpo.appendChild(el("p", "dlg-desc", f.descricao));
+
+    var dl = el("dl", "dlg-dados");
+    function linha(rotulo, valor) {
+      dl.appendChild(el("dt", null, rotulo));
+      var dd = el("dd", null, valor);
+      dl.appendChild(dd);
+      return dd;
+    }
+    linha("Situação", descreverEstado(f).replace(/^./, function (c) { return c.toUpperCase(); }));
+    linha("Responsável", responsavelDe(f) || "Não definido");
+    linha("Origem", f.etapa ? "Etapa " + f.etapa + " da matriz" : s.etapas);
+    var p = estado.progresso[f.id];
+    if (p && p.em) {
+      var quem = linha(estaColada(f) ? "Colada por" : "Atualizada por", "…");
+      var data = new Date(p.em);
+      var dataTxt = isNaN(data) ? "" : " em " + data.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+      if (p.por && estado.user) {
+        estado.user.profiles([p.por]).then(function (perfis) {
+          var nome = (perfis[p.por] && perfis[p.por].name) || "Alguém da equipe";
+          quem.textContent = nome + dataTxt;
+        });
+      } else {
+        quem.textContent = (estado.local ? "Neste navegador" : "Alguém da equipe") + dataTxt;
+      }
+    }
+    corpo.appendChild(dl);
+
+    var ctrl = el("div", "dlg-controles");
+    if (!estado.db) {
+      ctrl.appendChild(el("p", "aviso-leitura", "O progresso compartilhado não está disponível nesta visualização, então o álbum está só para leitura."));
+    } else if (!estado.podeEscrever) {
+      ctrl.appendChild(el("p", "aviso-leitura", "Você pode ver o álbum, mas não colar figurinhas. Peça acesso de Contribuidor a quem compartilhou o álbum."));
+    } else if (f.meta === 1) {
+      var linhaB = el("div", "linha-botoes");
+      if (estaColada(f)) {
+        var desc = el("button", "botao secundario", "Descolar figurinha");
+        desc.type = "button";
+        desc.addEventListener("click", function () { gravar(f.id, 0); });
+        linhaB.appendChild(desc);
+      } else {
+        var colar = el("button", "botao", "Colar figurinha");
+        colar.type = "button";
+        colar.addEventListener("click", function () { gravar(f.id, 1); });
+        linhaB.appendChild(colar);
+      }
+      ctrl.appendChild(linhaB);
+    } else {
+      var cont = el("div", "contador");
+      var lab = el("label", null, "Quantos já foram feitos?");
+      lab.setAttribute("for", "campo-atual");
+      var menos = el("button", "passo", "−");
+      menos.type = "button";
+      menos.setAttribute("aria-label", "Diminuir 1");
+      var campo = document.createElement("input");
+      campo.type = "number";
+      campo.id = "campo-atual";
+      campo.min = "0";
+      campo.max = String(f.meta);
+      campo.step = "1";
+      campo.inputMode = "numeric";
+      campo.value = String(atualDe(f));
+      var mais = el("button", "passo", "+");
+      mais.type = "button";
+      mais.setAttribute("aria-label", "Aumentar 1");
+      var de = el("span", "de", "de " + f.meta + (f.unidade ? " " + f.unidade : ""));
+      function ajustar(delta) {
+        var v = parseInt(campo.value, 10);
+        if (isNaN(v)) v = 0;
+        campo.value = String(Math.max(0, Math.min(f.meta, v + delta)));
+      }
+      menos.addEventListener("click", function () { ajustar(-1); });
+      mais.addEventListener("click", function () { ajustar(1); });
+      cont.appendChild(lab);
+      cont.appendChild(menos);
+      cont.appendChild(campo);
+      cont.appendChild(mais);
+      cont.appendChild(de);
+      ctrl.appendChild(cont);
+
+      var linhaP = el("div", "linha-botoes");
+      var salvar = el("button", "botao", "Salvar");
+      salvar.type = "button";
+      salvar.addEventListener("click", function () {
+        var v = parseInt(campo.value, 10);
+        if (isNaN(v)) v = 0;
+        gravar(f.id, Math.max(0, Math.min(f.meta, v)));
+      });
+      linhaP.appendChild(salvar);
+      if (!estaColada(f)) {
+        var completar = el("button", "botao secundario", "Completar (" + f.meta + "/" + f.meta + ")");
+        completar.type = "button";
+        completar.addEventListener("click", function () { gravar(f.id, f.meta); });
+        linhaP.appendChild(completar);
+      }
+      ctrl.appendChild(linhaP);
+    }
+    if (mensagemErro) ctrl.appendChild(el("p", "erro", mensagemErro));
+    corpo.appendChild(ctrl);
+
+    // Responsável pela ação: quem pode colar também pode definir
+    if (estado.db && estado.podeEscrever) {
+      var bloco = el("div", "dlg-bloco");
+      var labR = el("label", null, "Responsável por esta ação");
+      labR.setAttribute("for", "campo-resp");
+      var campoR = document.createElement("input");
+      campoR.type = "text";
+      campoR.id = "campo-resp";
+      campoR.maxLength = 60;
+      campoR.autocomplete = "off";
+      campoR.value = responsavelDe(f);
+      var salvarR = el("button", "botao secundario", "Salvar responsável");
+      salvarR.type = "button";
+      salvarR.id = "btn-salvar-resp";
+      salvarR.addEventListener("click", function () { gravarResponsavel(f.id, campoR.value); });
+      campoR.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter") { ev.preventDefault(); gravarResponsavel(f.id, campoR.value); }
+      });
+      bloco.appendChild(labR);
+      bloco.appendChild(campoR);
+      bloco.appendChild(salvarR);
+      if (estado.nota) {
+        var nota = el("p", "nota-ok", estado.nota);
+        nota.setAttribute("role", "status");
+        bloco.appendChild(nota);
+      }
+      corpo.appendChild(bloco);
+    }
+
+    var pe = el("div", "dlg-pe");
+    var fechar = el("button", "botao secundario", "Fechar");
+    fechar.type = "button";
+    fechar.id = "btn-fechar-dlg";
+    fechar.addEventListener("click", fecharDetalhe);
+    pe.appendChild(fechar);
+    corpo.appendChild(pe);
+
+    if (focoId) {
+      var alvo = $(focoId);
+      if (alvo) alvo.focus();
+    }
+  }
+
+  // Não redesenha o diálogo enquanto alguém está digitando num campo dele
+  function podeRedesenharDetalhe() {
+    var a = document.activeElement;
+    return !(a && dialogo.contains(a) && a.tagName === "INPUT");
+  }
+
+  // ---------- Responsável: gravação ----------
+  function gravarResponsavel(id, texto) {
+    if (!estado.db || estado.gravandoResp[id]) return;
+    var f = figPorId[id];
+    var nome = String(texto || "").replace(/\s+/g, " ").trim().slice(0, 60);
+    function redesenhar(erro) {
+      if (estado.abertoId === id && dialogo.open) preencherDetalhe(id, erro || null);
+    }
+    if (nome === responsavelDe(f)) {
+      estado.nota = nome ? "Responsável já está salvo." : "";
+      redesenhar();
+      return;
+    }
+    estado.gravandoResp[id] = true;
+    var ref = estado.db.collection("responsaveis").doc(id);
+    var dados = { nome: nome, em: new Date().toISOString() };
+    if (estado.meuId) dados.por = estado.meuId;
+    var operacao = nome ? ref.set(dados) : ref.delete();
+    operacao.then(function () {
+      estado.gravandoResp[id] = false;
+      // Reflete já na tela; o retrato do banco confirma em seguida
+      if (nome) estado.responsaveis[id] = dados; else delete estado.responsaveis[id];
+      atualizarSlot(f, null);
+      estado.nota = nome ? "Responsável salvo." : "Responsável removido.";
+      anunciar(estado.nota);
+      redesenhar();
+    }).catch(function (e) {
+      estado.gravandoResp[id] = false;
+      estado.nota = "";
+      var msg = "Não foi possível salvar o responsável agora. Tente de novo em instantes.";
+      if (e && e.code === "invalid_argument") {
+        estado.podeEscrever = false;
+        msg = "Você não tem permissão para alterar este álbum.";
+      }
+      anunciar(msg);
+      redesenhar(msg);
+    });
+  }
+
+  // ---------- Gravação no banco compartilhado ----------
+  function gravar(id, valor) {
+    if (!estado.db || estado.gravando[id]) return;
+    var f = figPorId[id];
+    if (valor === atualDe(f)) { fecharDetalhe(); return; }
+    estado.gravando[id] = true;
+    var dados = { atual: valor, em: new Date().toISOString() };
+    if (estado.meuId) dados.por = estado.meuId;
+    var ref = estado.db.collection("progresso").doc(id);
+
+    function tentar(retry) {
+      return ref.set(dados).catch(function (e) {
+        if (e && e.code === "unavailable" && retry) {
+          return new Promise(function (r) { setTimeout(r, 400 + Math.random() * 600); }).then(function () { return tentar(false); });
+        }
+        throw e;
+      });
+    }
+
+    // Fecha o diálogo logo, para a pessoa ver a animação no álbum
+    fecharDetalhe();
+    tentar(true).then(function () {
+      estado.gravando[id] = false;
+    }).catch(function (e) {
+      estado.gravando[id] = false;
+      var msg = "Não foi possível salvar agora. Tente de novo em instantes.";
+      if (e && e.code === "invalid_argument") {
+        estado.podeEscrever = false;
+        msg = "Você não tem permissão para colar figurinhas neste álbum.";
+      } else if (e && e.code === "quota_exceeded") {
+        msg = "O espaço do álbum compartilhado está cheio. Avise quem administra o álbum.";
+      }
+      definirStatus(msg, "aviso");
+      anunciar(msg);
+    });
+  }
+
+  // ---------- Zerar álbum (só quem edita o artefato) ----------
+  $("btn-zerar").addEventListener("click", function () {
+    $("zerar-confirma").hidden = false;
+    $("btn-zerar-nao").focus();
+  });
+  $("btn-zerar-nao").addEventListener("click", function () {
+    $("zerar-confirma").hidden = true;
+    $("btn-zerar").focus();
+  });
+  $("btn-zerar-sim").addEventListener("click", function () {
+    var btn = this;
+    if (!estado.db) return;
+    btn.disabled = true;
+    var ids = Object.keys(estado.progresso);
+    var col = estado.db.collection("progresso");
+    // Apaga um documento por vez
+    ids.reduce(function (p, id) {
+      return p.then(function () { return col.doc(id).delete(); });
+    }, Promise.resolve()).then(function () {
+      definirStatus("Álbum zerado. Todas as figurinhas foram descoladas.", "ok");
+      anunciar("Álbum zerado.");
+    }).catch(function () {
+      definirStatus("Não foi possível zerar o álbum agora. Tente de novo.", "aviso");
+    }).then(function () {
+      btn.disabled = false;
+      $("zerar-confirma").hidden = true;
+    });
+  });
+
+  // ---------- Conexão com o banco ----------
+  function receberRetrato(snap) {
+    var novo = {};
+    snap.docs.forEach(function (d) {
+      var v = d.data();
+      if (v && typeof v.atual === "number" && figPorId[d.id]) novo[d.id] = v;
+    });
+    var antes = {};
+    figurinhas.forEach(function (f) { antes[f.id] = atualDe(f); });
+    estado.progresso = novo;
+
+    var avisos = [];
+    figurinhas.forEach(function (f) {
+      var a = antes[f.id], depois = atualDe(f);
+      var anim = null;
+      if (estado.carregou && depois !== a) {
+        if (depois >= f.meta && a < f.meta) {
+          anim = "colar";
+          avisos.push("Figurinha " + f.numero + ", " + f.titulo + ", colada.");
+        } else if (depois > a) {
+          anim = "avancar";
+          avisos.push(f.titulo + ": " + depois + " de " + f.meta + ".");
+        } else if (depois < f.meta && a >= f.meta) {
+          avisos.push("Figurinha " + f.numero + " descolada.");
+        }
+      }
+      atualizarSlot(f, anim);
+    });
+    atualizarTotais();
+    if (avisos.length) {
+      var coladas = figurinhas.filter(estaColada).length;
+      anunciar(avisos.join(" ") + " Álbum: " + coladas + " de " + figurinhas.length + ".");
+    }
+    estado.carregou = true;
+    if (!snap.metadata.fromCache) {
+      definirStatus(estado.podeEscrever
+        ? "Álbum compartilhado com a equipe. Toque numa figurinha para colar."
+        : "Álbum compartilhado. Você está vendo em modo leitura.", "ok");
+    }
+    if (estado.abertoId && dialogo.open && podeRedesenharDetalhe()) preencherDetalhe(estado.abertoId, null);
+  }
+
+  function receberResponsaveis(snap) {
+    var novo = {};
+    snap.docs.forEach(function (d) {
+      var v = d.data();
+      if (v && typeof v.nome === "string" && v.nome && figPorId[d.id]) novo[d.id] = v;
+    });
+    estado.responsaveis = novo;
+    figurinhas.forEach(function (f) { atualizarSlot(f, null); });
+    if (estado.abertoId && dialogo.open && podeRedesenharDetalhe()) preencherDetalhe(estado.abertoId, null);
+  }
+
+  function conectar() {
+    window.claude.use("db").then(function (db) {
+      if (!db) {
+        definirStatus("O progresso compartilhado não está disponível aqui. O álbum aparece vazio, só para leitura.", "aviso");
+        return;
+      }
+      estado.db = db;
+      var temporizador = setTimeout(function () {
+        definirStatus("Ainda não foi possível carregar o progresso da equipe. O que aparece pode estar desatualizado.", "aviso");
+      }, 10000);
+      db.collection("progresso").onSnapshot(function (snap) {
+        if (!snap.metadata.fromCache) clearTimeout(temporizador);
+        receberRetrato(snap);
+      }, function (erro) {
+        clearTimeout(temporizador);
+        definirStatus(erro && erro.code === "revoked"
+          ? "O acesso ao progresso compartilhado foi encerrado nesta visualização."
+          : "A conexão com o álbum compartilhado caiu. Recarregue a página para tentar de novo.", "aviso");
+      });
+      // Responsáveis ficam numa coleção própria: zerar o álbum não apaga quem responde por cada ação
+      db.collection("responsaveis").onSnapshot(receberResponsaveis, function () {});
+    });
+
+    window.claude.use("user").then(function (user) {
+      estado.user = user;
+      // Sem informação de quem vê: deixamos tentar e a gravação decide
+      if (!user) { estado.podeEscrever = true; return; }
+      return Promise.all([user.id(), user.can("data.write"), user.canEdit()]).then(function (r) {
+        estado.meuId = r[0];
+        // null = a plataforma não informou; nesse caso deixamos tentar e a gravação decide
+        estado.podeEscrever = r[1] !== false;
+        estado.souAdmin = r[2] === true;
+        $("zerar").hidden = !estado.souAdmin;
+        if (estado.carregou) {
+          definirStatus(estado.podeEscrever
+            ? "Álbum compartilhado com a equipe. Toque numa figurinha para colar."
+            : "Álbum compartilhado. Você está vendo em modo leitura.", "ok");
+        }
+      });
+    });
+  }
+
+  // ---------- Início ----------
+  montarCapa();
+  montarIndice();
+  montarPaginas();
+  renderizarTudo();
+  if (window.claude && typeof window.claude.use === "function") {
+    conectar();
+  } else {
+    conectarLocal();
+  }
+
+  // ---------- Fora do Claude: progresso salvo neste navegador (localStorage) ----------
+  // Imita só o pedaço do banco que a página usa: collection().onSnapshot() e doc().set()/delete().
+  // Para ligar um backend de verdade depois, basta trocar esta função por outra com a mesma forma.
+  function criarBancoLocal() {
+    var CHAVE = "dindown-stickers-v1";
+    var dados = { progresso: {}, responsaveis: {} };
+    var ouvintes = {};
+    try {
+      var bruto = localStorage.getItem(CHAVE);
+      var lido = bruto ? JSON.parse(bruto) : null;
+      if (lido && typeof lido === "object") {
+        dados.progresso = lido.progresso || {};
+        dados.responsaveis = lido.responsaveis || {};
+      }
+    } catch (e) { /* sem armazenamento: o álbum funciona, mas não lembra ao recarregar */ }
+    var persiste = true;
+    function salvar() {
+      try { localStorage.setItem(CHAVE, JSON.stringify(dados)); } catch (e) { persiste = false; }
+    }
+    function retrato(nome) {
+      var c = dados[nome] || {};
+      return {
+        docs: Object.keys(c).map(function (k) { var v = c[k]; return { id: k, data: function () { return v; } }; }),
+        metadata: { fromCache: false }
+      };
+    }
+    function avisar(nome) {
+      (ouvintes[nome] || []).forEach(function (cb) { cb(retrato(nome)); });
+    }
+    return {
+      persiste: function () { return persiste; },
+      collection: function (nome) {
+        if (!dados[nome]) dados[nome] = {};
+        if (!ouvintes[nome]) ouvintes[nome] = [];
+        return {
+          onSnapshot: function (cb) {
+            ouvintes[nome].push(cb);
+            setTimeout(function () { cb(retrato(nome)); }, 0);
+            return function () {};
+          },
+          doc: function (id) {
+            return {
+              set: function (v) { dados[nome][id] = v; salvar(); avisar(nome); return Promise.resolve(); },
+              delete: function () { delete dados[nome][id]; salvar(); avisar(nome); return Promise.resolve(); }
+            };
+          }
+        };
+      }
+    };
+  }
+
+  function conectarLocal() {
+    var banco = criarBancoLocal();
+    estado.local = true;
+    estado.db = banco;
+    estado.podeEscrever = true;
+    estado.souAdmin = true;
+    $("zerar").hidden = false;
+    $("uso-onde").textContent = "Nesta versão o progresso fica salvo só neste navegador. Para a equipe ver o mesmo álbum, use a versão publicada no Claude.";
+    $("zerar-aviso").textContent = "Isso descola todas as figurinhas neste navegador. Não dá para desfazer.";
+    function avisoLocal() {
+      definirStatus(banco.persiste()
+        ? "Progresso salvo só neste navegador. Toque numa figurinha para colar."
+        : "Este navegador bloqueou o armazenamento: o progresso some ao recarregar a página.",
+        banco.persiste() ? "ok" : "aviso");
+    }
+    banco.collection("progresso").onSnapshot(function (snap) { receberRetrato(snap); avisoLocal(); });
+    banco.collection("responsaveis").onSnapshot(receberResponsaveis);
+  }
+})();
+</script>
+</body>
+</html>
